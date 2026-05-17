@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHIELD OS | Crisis Management Interface</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <!-- Leaflet.js (No API Key Required) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <div class="scanner-line"></div>
+    <video id="hidden-video" style="display:none;" autoplay muted></video>
+    
+    <header>
+        <div class="logo">
+            <span class="shield-icon">🛡️</span>
+            <h1>SHIELD <span class="accent">OS</span></h1>
+        </div>
+        <div class="status-bar">
+            <div class="status-item">
+                <span class="label">NETWORK:</span>
+                <span class="value secure">ENCRYPTED</span>
+            </div>
+            <div class="status-item">
+                <span class="label">LOCATION:</span>
+                <span class="value" id="current-location">DETERRING...</span>
+            </div>
+            <div class="status-item">
+                <span class="label">SYSTEM:</span>
+                <span class="value pulse">ACTIVE</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="grid-container">
+            <!-- Left Panel: Trigger & Control -->
+            <section class="panel trigger-panel">
+                <div class="panel-header">
+                    <h2>EMERGENCY TRIGGER</h2>
+                </div>
+                <div class="trigger-content">
+                    <div id="recording-info" class="recording-indicator">
+                        <div class="rec-dot"></div>
+                        <span>VIDEO RECORDING ACTIVE</span>
+                    </div>
+                    <button id="sos-btn" class="sos-button">
+                        <span class="sos-text">SOS</span>
+                        <div class="ripple"></div>
+                    </button>
+                    <div id="timer-display">00:00:00</div>
+                    <div id="upload-status" class="upload-status">DRIVE UPLOADING: SYNCING...</div>
+                    <div id="progress-container" class="progress-container">
+                        <div id="progress-bar" class="progress-bar"></div>
+                    </div>
+                    <p class="warning-text">PRESS AND HOLD TO INITIATE PROTOCOL</p>
+                </div>
+            </section>
+
+            <!-- Center Panel: Live Map/Status -->
+            <section class="panel status-panel">
+                <div class="panel-header">
+                    <h2>CRISIS MONITOR</h2>
+                    <div class="features-status">
+                        <span id="rec-status" class="f-dot">REC</span>
+                        <span id="cloud-status" class="f-dot">CLOUD</span>
+                        <span id="alert-status" class="f-dot">ALERTS</span>
+                    </div>
+                </div>
+                <div class="monitor-display">
+                    <div id="camera-preview">
+                        <video id="preview-video" autoplay muted></video>
+                    </div>
+                    <div id="status-log" class="log-container">
+                        <div class="log-entry system">System initialized. Waiting for signal...</div>
+                    </div>
+                    <div class="map-placeholder">
+                        <div id="map"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel: Guardians & Evidence -->
+            <section class="panel guardians-panel">
+                <div class="panel-header">
+                    <h2>ACTIVE GUARDIANS</h2>
+                </div>
+                <div id="guardians-list" class="guardians-list">
+                    <div class="no-guardians">Scanning for nearby responders...</div>
+                </div>
+                
+                <div class="evidence-section">
+                    <h3>EVIDENCE VAULT</h3>
+                    <div id="evidence-link-container">
+                        <button id="gen-link-btn" class="secondary-btn" disabled>GENERATE ACCESS TOKEN</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="system-stats">
+            <span>Uptime: 99.99%</span>
+            <span>Latency: 24ms</span>
+            <span>Auth: Multi-Factor</span>
+        </div>
+        <div class="footer-msg">PROPERTY OF SHIELD GLOBAL SECURITY DIV.</div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
